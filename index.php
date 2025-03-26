@@ -43,14 +43,14 @@ function getKrishaListings($url) {
 
 
 
-echo "<script>let isProcessing = false; window.addEventListener('load', function() {isProcessing = false;}); window.addEventListener('beforeunload', function() {isProcessing = true;}); function autoUpdatePage() {setInterval(() => {if (!isProcessing) window.location.reload(); }, 5000);} autoUpdatePage();console.log(new Date())</script>";   	
+//echo "<script>let isProcessing = false; window.addEventListener('load', function() {isProcessing = false;}); window.addEventListener('beforeunload', function() {isProcessing = true;}); function autoUpdatePage() {setInterval(() => {if (!isProcessing) window.location.reload(); }, 5000);} autoUpdatePage();console.log(new Date())</script>";   	
 	
 $servername = "srv-pleskdb38.ps.kz:3306";
 $username = "nisproje_p1";
 $password = "A1104a1992";
 $dbname = "nisproje_p1";
 try {
-	$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);  			
+	$conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);  			
 } catch(PDOException $e) {
 	echo "Connection failed";			
 }
@@ -91,11 +91,11 @@ foreach ($listings as $listing) {
 		
 		$query = $conn->prepare("INSERT INTO adv(id, Title, Price, Location, Link) VALUES(:id, :Title, :Price, :Location, :Link)");                
 		$query->bindParam(':id', $listing['id']);
-		$query->bindParam(':Title', $listing['title']);
+		$query->bindParam(':Title',  $listing['title']);
 		$query->bindParam(':Price', $listing['price']);
 		$query->bindParam(':Location', $listing['location']);
 		$query->bindParam(':Link', $listing['link']);			
-		$query->execute(); 
+		$query->execute(); 		
 	}	
 }
 	
